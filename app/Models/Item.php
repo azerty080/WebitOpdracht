@@ -13,12 +13,16 @@ class Item extends Model
 
 	protected $fillable = [
         'title',
-        'description',
-        'image_path'
+        'description'
     ];
 
 
-    public function business() {
+    public function bid() {
         return $this->hasMany('App\Bid');
+    }
+
+
+    public function image() {
+        return $this->hasMany('App\Image');
     }
 }
