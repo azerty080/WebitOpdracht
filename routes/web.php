@@ -13,16 +13,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 use App\Http\Controllers\HomeController;
+
+use App\Http\Controllers\AdminController;
+
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 
 
 
+use Illuminate\Support\Facades\Auth;
 
 
 
-Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/', [HomeController::class, 'index'])->name('Index');
 Route::redirect('/home', '/');
+
+
+
+
+
+// Admin
+Route::get('/admin', [AdminController::class, 'index'])->name('Admin');
+Route::get('/admin/items', [AdminController::class, 'showitems'])->name('AdminItems');
+
+Route::get('/admin/item/{id}', [AdminController::class, 'itemdetail'])->name('AdminItemDetail');
+
+Route::get('/admin/additem', [AdminController::class, 'additem'])->name('AdminAddItem');
+Route::post('/admin/additem', [AdminController::class, 'additem'])->name('StoreItem');
 
 
 
@@ -33,18 +50,18 @@ Route::redirect('/home', '/');
 // Login & Register
 
 
-Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/login', [LoginController::class, 'login'])->name('Login');
 
 
 
-Route::post('/login', [LoginController::class, 'loginsubmit'])->name('loginsubmit');
+Route::post('/login', [LoginController::class, 'loginsubmit'])->name('LoginSubmit');
 
 
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])->name('Logout');
 
 
-Route::get('/register', [RegisterController::class, 'register'])->name('register');
-Route::post('/register', [RegisterController::class, 'registersubmit'])->name('registersubmit');
+Route::get('/register', [RegisterController::class, 'register'])->name('Register');
+Route::post('/register', [RegisterController::class, 'registersubmit'])->name('RegisterSubmit');
 
 
 
