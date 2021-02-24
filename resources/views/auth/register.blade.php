@@ -8,7 +8,7 @@
 
 
 
-    <form id="register-form" method="POST" action="{{ route('registersubmit') }}" role="form" data-toggle="validator">
+    <form id="register-form" method="POST" action="{{ route('RegisterSubmit') }}" role="form" data-toggle="validator">
         @csrf
 
         <div class="form-row">

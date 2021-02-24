@@ -18,10 +18,10 @@
 
         <!-- Styles -->
         <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
         <!-- <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet"> -->
         <!-- <link href="{{ asset('css/fontawesome-all.css') }}" rel="stylesheet"> -->
-        <link href="css/style.css" rel="stylesheet">
+        <link href="/css/style.css" rel="stylesheet">
     </head>
     <body>
         
@@ -38,11 +38,22 @@
                 <ul class="navbar-nav ml-auto">
 
 
-     
 
                     @if(Auth::check())
+
+                        @if(Auth::user()->role == 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link page-scroll" href="{{ route('Admin') }}">Admin Panel</a>
+                            </li>
+                        @endif
+
+
                         <li class="nav-item">
-                            <a class="nav-link page-scroll" href="{{ route('index') }}">account ofwo zeke</a>
+                            <a class="nav-link page-scroll" href="{{ route('Index') }}">Account</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="{{ route('Logout') }}">Uitloggen</a>
                         </li>
 <!--
                         @if(session()->get('account_type') == 'klant')
@@ -67,11 +78,11 @@
 
                     @else
                         <li class="nav-item">
-                            <a class="nav-link page-scroll" href="{{ route('login') }}">INLOGGEN</a>
+                            <a class="nav-link page-scroll" href="{{ route('Login') }}">INLOGGEN</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link page-scroll" href="{{ route('register') }}">REGISTREREN</a>
+                            <a class="nav-link page-scroll" href="{{ route('Register') }}">REGISTREREN</a>
                         </li>
                     @endif
                 </ul>

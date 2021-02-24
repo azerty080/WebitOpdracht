@@ -9,7 +9,7 @@
 
 
 
-        <form id="loginForm" method="POST" action="{{ route('login') }}" role="form" data-toggle="validator">
+        <form id="loginForm" method="POST" action="{{ route('Login') }}" role="form" data-toggle="validator">
             @csrf
 
             
