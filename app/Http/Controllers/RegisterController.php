@@ -17,7 +17,12 @@ class RegisterController extends Controller
 {
     public function register()
 	{
-		return view('auth.register');
+		if (Auth::check()) {
+            // The user is logged in...
+            return redirect('/')->with('error', 'Je bent al geregistreerd');
+        } else {
+            return view('auth.register');
+        }
 	}
 
 

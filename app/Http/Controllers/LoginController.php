@@ -14,25 +14,13 @@ class LoginController extends Controller
 {
 	public function login()
 	{
-
-        
-		if (session('logged_in')) {
+        if (Auth::check()) {
+            // The user is logged in...
             return redirect('/')->with('error', 'Je bent al ingelogd');
         } else {
             return view('auth.login');
         }
-
-
-        /*
-
-        if ($user->isAdmin()) {
-            return redirect(route('admin-dashboard')); 
-           //redirect to desired place since user is admin.
-        }
-
-        */
 	}
-
 
 
 
@@ -61,12 +49,14 @@ class LoginController extends Controller
 	}
 
 
-	public function logout()
+	public function logout(Request $request)
     {
-        if (session('logged_in')) {
-            session()->forget('logged_in');
-            session()->forget('account_data');
-            session()->forget('role');
+        if (Auth::check()) {
+            // The user is logged in...
+            Auth::logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
 
             return redirect('/')->with('message', 'Je bent uitgelogd');
         } else {
