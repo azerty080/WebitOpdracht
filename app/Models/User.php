@@ -38,8 +38,8 @@ class User extends Authenticatable
 
 
 
-    public function bid() {
-        return $this->hasMany('App\Bid');
+    public function bids() {
+        return $this->hasMany(Bid::class);
     }
 
 }

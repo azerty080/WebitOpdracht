@@ -17,12 +17,12 @@ class Item extends Model
     ];
 
 
-    public function bid() {
-        return $this->hasMany('App\Bid');
+    public function bids() {
+        return $this->hasMany(Bid::class);
     }
 
 
-    public function image() {
-        return $this->hasMany('App\Image');
+    public function images() {
+        return $this->hasMany(Image::class);
     }
 }

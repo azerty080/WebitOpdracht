@@ -17,7 +17,7 @@ class Image extends Model
     ];
 
 
-    public function bid() {
-        return $this->belongsTo('App\Item');
+    public function item() {
+        return $this->belongsTo(Item::class);
     }
 }
