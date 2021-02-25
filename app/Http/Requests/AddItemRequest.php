@@ -13,7 +13,7 @@ class AddItemRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class AddItemRequest extends FormRequest
     public function rules()
     {
         return [
+            'title' => 'required',
+            'description' => 'required',
             'images' => 'required',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
     }
 
@@ -32,6 +35,9 @@ class AddItemRequest extends FormRequest
     public function messages()
     {
         return [
+            'title.required' => 'Vul een titel in',
+            'description.required' => 'Vul een beschrijving in',
             'images.required' => 'Je hebt geen afbeelding geupload',
         ];
+    }
 }
