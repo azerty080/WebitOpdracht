@@ -13,7 +13,7 @@
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
         <!-- JS -->
-        <!-- <script src="{{ asset('js/jquery-3.4.1.min.js')}}"></script> -->
+        <script src="/js/jquery-3.5.1.min.js"></script>
         <!-- <script src="{{ asset('js/jquery-ui.min.js')}}"></script> -->
 
         <!-- Styles -->
@@ -25,6 +25,13 @@
     </head>
     <body>
         
+
+
+
+
+
+
+
 
         
 
