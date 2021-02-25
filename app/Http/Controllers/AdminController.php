@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 
+use App\Http\Requests\AddItemRequest;
+
 use App\Models\Item;
+use App\Models\Image;
+
+
 
 class AdminController extends Controller
 {
@@ -22,9 +27,9 @@ class AdminController extends Controller
     // Show All Item
     public function showitems()
     {
+        $items = Item::all();
 
-
-    	return view('admin.items.show');
+    	return view('admin.items.show', compact('items'));
     }
 
 
@@ -46,32 +51,43 @@ class AdminController extends Controller
     public function additem()
     {
 
-
-
         return view('admin.items.add');
     }
 
 
     // Store Item in DB
-    public function storeitem()
+    public function storeitem(AddItemRequest $request)
     {
+        
+        $item = new Item;
+
+        $item->title = $request->title;
+        $item->description = $request->description;
+
+        $item->save();
 
 
-/*
-        if ($request->hasfile('images')) {
-            $images = $request->file('images');
 
-            foreach($images as $image) {
-                $name = $image->getClientOriginalName();
-                $path = $image->storeAs('uploads', $name, 'public');
+        $uploadedImages = $request->images;
 
-                Image::create([
-                    'name' => $name,
-                    'path' => '/storage/'.$path
-                  ]);
-            }
+        foreach($uploadedImages as $uploadedImage) {
+            $imageName = time().'.'.$uploadedImage->getClientOriginalName();
+
+            $uploadedImage->storeAs('public/images', $imageName);
+            //$uploadedImage->move(public_path().'/images/', $imageName);  
+
+
+            $image = new Image;
+
+            $image->name = $imageName;
+
+            $image->path = '/storage/images/' . $imageName;
+            
+            
+            $image->item()->associate($item);
+            $image->save();
+
         }
-*/
 
 
         return redirect('/admin/items')->with('message', 'Voorwerp succesvol toegevoegd');
