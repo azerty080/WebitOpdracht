@@ -30,6 +30,13 @@ Route::redirect('/home', '/');
 
 
 
+Route::get('/lot-{id}', [HomeController::class, 'itemdetail'])->name('ItemDetail');
+
+
+Route::post('/lot-{id}/addbid', [HomeController::class, 'addbid'])->name('AddBid');
+
+
+
 
 
 // Admin
@@ -39,7 +46,7 @@ Route::get('/admin/items', [AdminController::class, 'showitems'])->name('AdminIt
 Route::get('/admin/item/{id}', [AdminController::class, 'itemdetail'])->name('AdminItemDetail');
 
 Route::get('/admin/additem', [AdminController::class, 'additem'])->name('AdminAddItem');
-Route::post('/admin/additem', [AdminController::class, 'additem'])->name('StoreItem');
+Route::post('/admin/additem', [AdminController::class, 'storeitem'])->name('StoreItem');
 
 
 
