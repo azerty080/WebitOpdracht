@@ -21,20 +21,38 @@
 	@endforeach
 
 
-	<h3>Huidig bod</h3>
-	@if ($item->bid)
-		<p>{{ $item->bid }}</p>
+	<h3>Hoogste bod</h3>
+	@if ($item->bids)
+		<p>€ {{ $item->bids->max('price') }}</p>
 	@else
 		<p>Nog niets geboden</p>
 	@endif
 
 
-
+	
 
 
 
 
 	@if(Auth::check())
+
+		@if ($item->bids->where('user_id', Auth::id())->first())
+			<h3>Uw hoogste bod</h3>
+			<p>€ {{ $item->bids->where('user_id', Auth::id())->max('price') }}</p>
+
+		    <form id="register-form" method="POST" action="{{ route('RemoveBid', ['id' => $item->id]) }}" role="form" data-toggle="validator">
+		        @csrf
+
+		        <div class="form-group">
+		            <button type="submit" class="btn btn-danger remove-bid">Verwijder Bod</button>
+		        </div>
+		    </form>
+		@endif
+
+
+
+
+
 
 	    <form id="register-form" method="POST" action="{{ route('AddBid', ['id' => $item->id]) }}" role="form" data-toggle="validator">
 	        @csrf
@@ -44,7 +62,7 @@
 
 	            <label class="label-control" for="">€</label>
 
-	            <input type="price" class="form-control-input" id="cprice" name="price" min="1" @if($item->bids) value="{{ $item->bids->max('price') }}" @else value="1" @endif required>
+	            <input type="price" class="form-control-input" id="cprice" name="price" min="1" @if($item->bids) value="{{ $item->bids->max('price')+1 }}" min="{{ $item->bids->max('price')+1 }}" @else value="1" min="1" @endif required>
 	            <div class="help-block with-errors"></div>
 	        </div>
 
@@ -68,4 +86,22 @@
 
 
 
+@stop
+
+
+
+
+
+@section('script')
+	<script type="text/javascript">
+
+	    $('.remove-bid').click(function(e){
+	        e.preventDefault() // Don't post the form, unless confirmed
+	        if (confirm('Are you sure?')) {
+	            // Post the form
+	            $(e.target).closest('form').submit() // Post the surrounding form
+	        }
+	    });
+
+	</script>
 @stop
