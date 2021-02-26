@@ -22,12 +22,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-    	// return view('index', compact('bookmarks', 'appointments'));
-    	$userId = Auth::id();
-		//$userId = Hash::make('secret');
-    	//dd($userId);
-
-
     	$items = Item::all();
 
     	return view('index', compact('items'));
@@ -55,22 +49,61 @@ class HomeController extends Controller
     public function addbid($id, AddBidRequest $request)
     {
     	$item = Item::where('id', $id)->first();
-    	$user = User::where('id', Auth::id())->first();
-		
+    	$user = Auth::user();
+    	
+    	$oldUserBid = Bid::where('user_id', Auth::id())->where('item_id', $id)->first();
 
-        $bid = new Bid;
-
-        $bid->price = $request->price;
-
-        $bid->item()->associate($item);
-        $bid->user()->associate($user);
-        $bid->save();
+    	$highestBid = Bid::where('item_id', $id)->max('price');
+    	$userBid = $request->price;
 
 
-		return redirect('/lot-' . $id)->with('message', 'Bod geplaatst');
-		
+    	if ($highestBid < $userBid) {
+    		
+			if ($oldUserBid) {
+
+				$oldUserBid->price = $userBid;
+		        $oldUserBid->save();
+
+			} else {
+
+		        $bid = new Bid;
+
+		        $bid->price = $userBid;
+
+		        $bid->item()->associate($item);
+		        $bid->user()->associate($user);
+		        $bid->save();
+
+			}
+
+			$message = 'Bod geplaatst';
+			//return redirect('/lot-' . $id)->with('message', 'Bod geplaatst');
+
+		} else {
+			dd('bod is lager');
+			$message = 'Je bod moet hoger zijn dan het oude bod';
+			//return redirect('/lot-' . $id)->with('message', 'Je bod moet hoger zijn dan het oude bod');
+		}
+	
+
+
+
+		return redirect('/lot-' . $id)->with('message', $message);
     }
 
+
+
+
+
+    // Delete a bid to item
+    public function removebid($id)
+    {
+        $userBid = Bid::where('user_id', Auth::id())->where('item_id', $id)->first();
+        $userBid->delete();
+
+		return redirect('/lot-' . $id)->with('message', 'Bod verwijderd');
+		
+    }
 
 
 

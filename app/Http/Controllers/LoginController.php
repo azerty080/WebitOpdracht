@@ -33,19 +33,15 @@ class LoginController extends Controller
 
         if (Auth::attempt($userdata)) {
 
-            // validation successful!
-            // redirect them to the secure section or whatever
-            // return Redirect::to('secure');
-            // for now we'll just echo success (even though echoing in a controller is bad)
-            return redirect('/')->with('message', 'Je bent ingelogd');
+            if (Auth::user()->role == 'admin') {
+                return redirect('/admin')->with('message', 'Je bent ingelogd');
+            } else {
+                return redirect('/')->with('message', 'Je bent ingelogd');
+            }
 
         } else {        
-
-            // validation not successful, send back to form 
-            //return Redirect::to('login');
             return redirect('/login')->with('message', 'Combinate email en wachtwoord onjuist');
         }
-
 	}
 
 

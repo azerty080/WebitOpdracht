@@ -44,6 +44,13 @@ class RegisterController extends Controller
 
         $user->save();
 
+        $userdata = array(
+            'email'     => $request->email,
+            'password'  => $request->password
+        );
+
+        Auth::attempt($userdata);
+
         return redirect('/')->with('message', 'Account succesvol aangemaakt');
 	}
 
