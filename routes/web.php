@@ -37,16 +37,21 @@ Route::post('/lot-{id}/addbid', [HomeController::class, 'addbid'])->name('AddBid
 
 
 
+Route::post('/lot-{id}/removebid', [HomeController::class, 'removebid'])->name('RemoveBid');
+
+
+
 
 
 // Admin
-Route::get('/admin', [AdminController::class, 'index'])->name('Admin');
-Route::get('/admin/items', [AdminController::class, 'showitems'])->name('AdminItems');
+Route::get('/admin', [AdminController::class, 'index'])->middleware('role:admin')->name('Admin');
 
-Route::get('/admin/item/{id}', [AdminController::class, 'itemdetail'])->name('AdminItemDetail');
+Route::get('/admin/items', [AdminController::class, 'showitems'])->middleware('role:admin')->name('AdminItems');
 
-Route::get('/admin/additem', [AdminController::class, 'additem'])->name('AdminAddItem');
-Route::post('/admin/additem', [AdminController::class, 'storeitem'])->name('StoreItem');
+Route::get('/admin/item/{id}', [AdminController::class, 'itemdetail'])->middleware('role:admin')->name('AdminItemDetail');
+
+Route::get('/admin/additem', [AdminController::class, 'additem'])->middleware('role:admin')->name('AdminAddItem');
+Route::post('/admin/additem', [AdminController::class, 'storeitem'])->middleware('role:admin')->name('StoreItem');
 
 
 
