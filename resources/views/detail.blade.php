@@ -22,13 +22,11 @@
 
 
 	<h3>Hoogste bod</h3>
-	@if ($item->bids)
-		<p>€ {{ $item->bids->max('price') }}</p>
-	@else
+	@if (count($item->bids) == 0)
 		<p>Nog niets geboden</p>
+	@else
+		<p>€ {{ $item->bids->max('price') }}</p>
 	@endif
-
-
 	
 
 

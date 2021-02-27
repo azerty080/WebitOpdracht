@@ -5,10 +5,9 @@
 
 @section('content')
 
-	<h1>Bedankt, je bod is geplaatst</h1>
+	<h1>Bedankt, je bod is geplaatst!</h1>
 
 
-	<a href="{{ route('index') }}">Bekijk andere voorwerpen</a>
-
+	<a href="{{ route('Index') }}">Bekijk andere voorwerpen</a>
 
 @stop

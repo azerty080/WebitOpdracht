@@ -56,8 +56,18 @@
 
 
                         <li class="nav-item">
-                            <a class="nav-link page-scroll" href="{{ route('Index') }}">Account</a>
+                            <h3>{{ Auth::user()->firstname }} |V|</h3>
                         </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="{{ route('Bids') }}">Mijn Biedingen</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link page-scroll" href="{{ route('EditPassword') }}">Verander Wachtwoord</a>
+                        </li>
+
 
                         <li class="nav-item">
                             <a class="nav-link page-scroll" href="{{ route('Logout') }}">Uitloggen</a>
