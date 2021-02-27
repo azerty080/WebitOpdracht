@@ -9,7 +9,9 @@ use App\Http\Requests\AddItemRequest;
 
 use App\Models\Item;
 use App\Models\Image;
+use App\Models\Bid;
 
+use Illuminate\Support\Facades\Storage;
 
 
 class AdminController extends Controller
@@ -124,13 +126,22 @@ class AdminController extends Controller
 
 
     // Remove Item
-    public function removeitem()
+    public function removeitem($id)
     {
+        $item = Item::where('id', $id);
+        $images = Image::where('item_id', $id);
+        $bids = Bid::where('item_id', $id);
 
+        foreach ($images->get() as $image) {
+            Storage::delete('public/images/' . $image->name);
+        }
+
+        $item->delete();
+        $images->delete();
+        $bids->delete();
 
         return redirect('/admin/items')->with('message', 'Voorwerp succesvol verwijderd');
     }
-
 
 
 

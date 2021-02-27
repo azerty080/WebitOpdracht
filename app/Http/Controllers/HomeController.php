@@ -30,6 +30,12 @@ class HomeController extends Controller
 
 
 
+    public function thankyou()
+    {
+    	return view('thankyou');
+    }
+
+
 
 
     // Show Single Item
@@ -50,45 +56,31 @@ class HomeController extends Controller
     {
     	$item = Item::where('id', $id)->first();
     	$user = Auth::user();
-    	
-    	$oldUserBid = Bid::where('user_id', Auth::id())->where('item_id', $id)->first();
 
     	$highestBid = Bid::where('item_id', $id)->max('price');
     	$userBid = $request->price;
 
 
     	if ($highestBid < $userBid) {
-    		
-			if ($oldUserBid) {
 
-				$oldUserBid->price = $userBid;
-		        $oldUserBid->save();
+	        $bid = new Bid;
 
-			} else {
+	        $bid->price = $userBid;
 
-		        $bid = new Bid;
-
-		        $bid->price = $userBid;
-
-		        $bid->item()->associate($item);
-		        $bid->user()->associate($user);
-		        $bid->save();
-
-			}
+	        $bid->item()->associate($item);
+	        $bid->user()->associate($user);
+	        $bid->save();
 
 			$message = 'Bod geplaatst';
 			//return redirect('/lot-' . $id)->with('message', 'Bod geplaatst');
 
 		} else {
-			dd('bod is lager');
+
 			$message = 'Je bod moet hoger zijn dan het oude bod';
 			//return redirect('/lot-' . $id)->with('message', 'Je bod moet hoger zijn dan het oude bod');
 		}
-	
 
-
-
-		return redirect('/lot-' . $id)->with('message', $message);
+		return redirect('/bedankt')->with('message', $message);
     }
 
 
@@ -98,7 +90,7 @@ class HomeController extends Controller
     // Delete a bid to item
     public function removebid($id)
     {
-        $userBid = Bid::where('user_id', Auth::id())->where('item_id', $id)->first();
+        $userBid = Bid::where('user_id', Auth::id())->where('item_id', $id)->orderBy('price', 'DESC')->first();
         $userBid->delete();
 
 		return redirect('/lot-' . $id)->with('message', 'Bod verwijderd');
@@ -106,5 +98,19 @@ class HomeController extends Controller
     }
 
 
+
+
+
+
+
+
+    // Show All Bids for user
+    public function showbids()
+    {
+		// $bids = Bid::where('user_id', Auth::user()->id)->orderBy('item_id', 'ASC')->get();
+		$bids = Bid::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+
+		return view('bids', compact('bids'));
+    }
 
 }
