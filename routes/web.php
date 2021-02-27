@@ -16,6 +16,8 @@ use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\AdminController;
 
+use App\Http\Controllers\AccountController;
+
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 
@@ -29,12 +31,27 @@ Route::get('/', [HomeController::class, 'index'])->name('Index');
 Route::redirect('/home', '/');
 
 
+Route::get('/bedankt', [HomeController::class, 'thankyou'])->name('ThankYou');
 
+
+Route::get('/biedingen', [HomeController::class, 'showbids'])->name('Bids');
+
+
+
+Route::get('/account', [AccountController::class, 'account'])->name('Account');
+
+
+Route::get('/account/verander-wachtwoord', [AccountController::class, 'editpassword'])->name('EditPassword');
+Route::post('/account/verander-wachtwoord', [AccountController::class, 'updatepassword'])->name('UpdatePassword');
+
+
+
+
+// Voorwerpen
 Route::get('/lot-{id}', [HomeController::class, 'itemdetail'])->name('ItemDetail');
 
 
 Route::post('/lot-{id}/addbid', [HomeController::class, 'addbid'])->name('AddBid');
-
 
 
 Route::post('/lot-{id}/removebid', [HomeController::class, 'removebid'])->name('RemoveBid');
@@ -54,6 +71,11 @@ Route::get('/admin/additem', [AdminController::class, 'additem'])->middleware('r
 Route::post('/admin/additem', [AdminController::class, 'storeitem'])->middleware('role:admin')->name('StoreItem');
 
 
+Route::get('/admin/item/{id}/edit', [AdminController::class, 'edititem'])->middleware('role:admin')->name('EditItem');
+Route::post('/admin/item/{id}/edit', [AdminController::class, 'updateitem'])->middleware('role:admin')->name('UpdateItem');
+
+
+Route::post('/admin/removeitem/{id}', [AdminController::class, 'removeitem'])->middleware('role:admin')->name('RemoveItem');
 
 
 
