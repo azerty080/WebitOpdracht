@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddBidRequest extends FormRequest
+class UpdateItemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,19 +24,20 @@ class AddBidRequest extends FormRequest
     public function rules()
     {
         return [
-            'price' => 'required|integer|min:1',
+            'title' => 'required',
+            'description' => 'required',
+            'images.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
         ];
     }
-
-
 
 
     public function messages()
     {
         return [
-            'price.required' => 'Geef aub een prijs in',
-            'price.integer' => 'Geef aub een nummer in',
-            'price.min' => 'Je kan niet lager dan 1 euro bieden'
+            'title.required' => 'Vul een titel in',
+            'description.required' => 'Vul een beschrijving in',
+            'images.*.image' => 'Bestandstype is niet ondersteund',
+            'images.*.mimes' => 'Bestandstype is niet ondersteund',
         ];
     }
 }

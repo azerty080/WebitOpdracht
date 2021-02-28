@@ -24,18 +24,21 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            //Both forms
             'email' => 'required|string|email|exists:users,email',
-            'password' => 'required|string',
+            'password' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
+
             'email.required' => 'Je hebt je email niet ingevuld',
-            'email.email' => 'Ongeldig email adres',
-            'email.exists' => 'Ongeldig email adres',
+            'email.string' => 'Je hebt je email niet ingevuld',
+            'email.required' => 'Je hebt je email niet ingevuld',
+            'email.email' => 'Het email adres of wachtwoord is ongeldig',
+            'email.exists' => 'Het email adres of wachtwoord is ongeldig',
+
             'password.required' => 'Je hebt je wachtwoord niet ingevuld',
         ];
     }

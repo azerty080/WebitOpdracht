@@ -39,13 +39,19 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'firstname.sometimes' => 'Je hebt je voornaam niet ingevuld',
+            'firstname.required' => 'Je hebt je voornaam niet ingevuld',
             'firstname.string' => 'Je hebt je voornaam niet ingevuld',
             'firstname.max:255' => 'Je hebt je voornaam niet ingevuld',
 
-            'lastname.sometimes' => 'Je hebt je achternaam niet ingevuld',
+            'lastname.required' => 'Je hebt je achternaam niet ingevuld',
             'lastname.string' => 'Je hebt je achternaam niet ingevuld',
             'lastname.max:255' => 'Je hebt je achternaam niet ingevuld',
+
+            'email.required' => 'Je hebt je email niet ingevuld',
+            'email.string' => 'Je hebt je email niet ingevuld',
+            'email.email' => 'Email adres ongeldig',
+            'email.max:255' => 'Je email mag niet meer dan 255 karakters bevatten',
+            'email.unique' => 'Er is al een account voor dit email adres',
 
             'township.required' => 'Je hebt je gemeente niet ingevuld',
             'township.string' => 'Je hebt je gemeente niet ingevuld',
@@ -54,12 +60,6 @@ class RegisterRequest extends FormRequest
             'address.required' => 'Je hebt je adres niet ingevuld',
             'address.string' => 'Je hebt je adres niet ingevuld',
             'address.max:255' => 'Je adres mag niet meer dan 255 karakters bevatten',
-
-            'email.required' => 'Je hebt je email niet ingevuld',
-            'email.string' => 'Je hebt je email niet ingevuld',
-            'email.email' => 'Email adres ongeldig',
-            'email.max:255' => 'Je email mag niet meer dan 255 karakters bevatten',
-            'email.unique' => 'Er is al een account voor dit email adres',
 
             'password.required' => 'Je hebt geen wachtwoord ingevuld',
             'password.confirmed' => 'Je hebt je wachtwoord niet bevestigd',

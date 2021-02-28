@@ -27,7 +27,7 @@ class AddItemRequest extends FormRequest
             'title' => 'required',
             'description' => 'required',
             'images' => 'required',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'images.*' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
         ];
     }
 
@@ -38,6 +38,8 @@ class AddItemRequest extends FormRequest
             'title.required' => 'Vul een titel in',
             'description.required' => 'Vul een beschrijving in',
             'images.required' => 'Je hebt geen afbeelding geupload',
+            'images.*.image' => 'Bestandstype is niet ondersteund',
+            'images.*.mimes' => 'Bestandstype is niet ondersteund',
         ];
     }
 }
