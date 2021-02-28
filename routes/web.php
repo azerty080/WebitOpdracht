@@ -38,9 +38,6 @@ Route::get('/biedingen', [HomeController::class, 'showbids'])->name('Bids');
 
 
 
-Route::get('/account', [AccountController::class, 'account'])->name('Account');
-
-
 Route::get('/account/verander-wachtwoord', [AccountController::class, 'editpassword'])->name('EditPassword');
 Route::post('/account/verander-wachtwoord', [AccountController::class, 'updatepassword'])->name('UpdatePassword');
 
@@ -49,6 +46,8 @@ Route::post('/account/verander-wachtwoord', [AccountController::class, 'updatepa
 
 // Voorwerpen
 Route::get('/lot-{id}', [HomeController::class, 'itemdetail'])->name('ItemDetail');
+
+Route::get('/lot-{id}/biedingen', [HomeController::class, 'itembids'])->name('ItemBids');
 
 
 Route::post('/lot-{id}/addbid', [HomeController::class, 'addbid'])->name('AddBid');
@@ -61,11 +60,13 @@ Route::post('/lot-{id}/removebid', [HomeController::class, 'removebid'])->name('
 
 
 // Admin
-Route::get('/admin', [AdminController::class, 'index'])->middleware('role:admin')->name('Admin');
-
 Route::get('/admin/items', [AdminController::class, 'showitems'])->middleware('role:admin')->name('AdminItems');
 
 Route::get('/admin/item/{id}', [AdminController::class, 'itemdetail'])->middleware('role:admin')->name('AdminItemDetail');
+
+Route::get('/admin/item/{id}/bids', [AdminController::class, 'itembids'])->middleware('role:admin')->name('AdminItemBids');
+
+
 
 Route::get('/admin/additem', [AdminController::class, 'additem'])->middleware('role:admin')->name('AdminAddItem');
 Route::post('/admin/additem', [AdminController::class, 'storeitem'])->middleware('role:admin')->name('StoreItem');
