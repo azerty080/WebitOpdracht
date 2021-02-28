@@ -1,5 +1,5 @@
 body {
-	background-color: grey;
+	background-color: lightgrey;
 }
 
 
@@ -7,8 +7,31 @@ main {
 	margin-top: 100px;
 }
 
+a {
+	color: rgba(0,0,0,.7);
+	text-decoration: none;
+}
 
+a:hover {
+	color: rgba(0,0,0,.5);
+	text-decoration: none;
+}
 
 .hide {
 	display: none;
 }
+
+
+.carousel-item img {
+	height: 350px;
+}
+
+
+#carouselExampleIndicators {
+	background-color: grey;
+}
+
+.carousel-item img {
+	margin: auto;
+}
+
