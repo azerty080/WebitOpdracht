@@ -22,14 +22,6 @@ class AccountController extends Controller
 
 
     
-    public function account()
-    {
-    	return view('account.index');
-    }
-
-
-
-
 
 
     public function editpassword()
@@ -56,14 +48,16 @@ class AccountController extends Controller
 
 	        $user->save();
 
+	        $messageType = 'success';
 	        $message = 'Wachtwoord succesvol veranderd';
 
 		} else {
-			$route = '/account/verander-wachtwoord';
+	        $messageType = 'error';
 			$message = 'Wachtwoord is incorrect';
+			$route = '/account/verander-wachtwoord';
 		}
 
-    	return redirect($route)->with('message', $message);
+    	return redirect($route)->with($messageType, $message);
     }
 
 }

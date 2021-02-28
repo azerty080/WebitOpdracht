@@ -15,8 +15,8 @@ class LoginController extends Controller
 	public function login()
 	{
         if (Auth::check()) {
-            // The user is logged in...
-            return redirect('/')->with('error', 'Je bent al ingelogd');
+            // The user is logged in
+            return redirect('/')->with('info', 'Je bent al ingelogd');
         } else {
             return view('auth.login');
         }
@@ -32,16 +32,16 @@ class LoginController extends Controller
         );
 
         if (Auth::attempt($userdata)) {
-
-            if (Auth::user()->role == 'admin') {
-                return redirect('/admin')->with('message', 'Je bent ingelogd');
-            } else {
-                return redirect('/')->with('message', 'Je bent ingelogd');
-            }
-
-        } else {        
-            return redirect('/login')->with('message', 'Combinate email en wachtwoord onjuist');
+            $messageType = 'success';
+            $message = 'Je bent ingelogd';
+            $redirectLink = '/';
+        } else {
+            $redirectLink = '/login';
+            $messageType = 'error';
+            $message = 'Combinate email en wachtwoord onjuist';
         }
+
+        return redirect($redirectLink)->with($messageType, $message);
 	}
 
 
@@ -54,9 +54,13 @@ class LoginController extends Controller
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return redirect('/')->with('message', 'Je bent uitgelogd');
+            $messageType = 'success';
+            $message = 'Je bent uitgelogd';
         } else {
-            return redirect('/')->with('error', 'Je moet eerst ingelogd zijn voordat je kan uitloggen');
+            $messageType = 'error';
+            $message = 'Je moet eerst ingelogd zijn voordat je kan uitloggen';
         }
+
+        return redirect('/')->with($messageType, $message);
     }
 }

@@ -17,12 +17,7 @@ class RegisterController extends Controller
 {
     public function register()
 	{
-		if (Auth::check()) {
-            // The user is logged in...
-            return redirect('/')->with('error', 'Je bent al geregistreerd');
-        } else {
-            return view('auth.register');
-        }
+        return view('auth.register');
 	}
 
 
@@ -49,11 +44,16 @@ class RegisterController extends Controller
             'password'  => $request->password
         );
 
+        // Log user out if he's logged in
+        if (Auth::check()) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
+
         Auth::attempt($userdata);
 
         return redirect('/')->with('message', 'Account succesvol aangemaakt');
 	}
-
-
 
 }

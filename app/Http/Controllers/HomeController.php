@@ -41,13 +41,20 @@ class HomeController extends Controller
     // Show Single Item
     public function itemdetail($id)
     {
-
 		$item = Item::where('id', $id)->first();
 
 		return view('detail', compact('item'));
     }
 
 
+    // Show Bids of Item
+    public function itembids($id)
+    {
+        $item = Item::where('id', $id)->first();
+        $bids = Bid::where('item_id', $id)->orderBy('price', 'DESC')->get();
+
+        return view('itembids', compact('item', 'bids'));
+    }
 
 
 
@@ -71,16 +78,16 @@ class HomeController extends Controller
 	        $bid->user()->associate($user);
 	        $bid->save();
 
-			$message = 'Bod geplaatst';
-			//return redirect('/lot-' . $id)->with('message', 'Bod geplaatst');
+	        $messageType = 'none';
+			$message = 'Je bod is geplaatst';
 
 		} else {
-
+			
+			$messageType = 'error';
 			$message = 'Je bod moet hoger zijn dan het oude bod';
-			//return redirect('/lot-' . $id)->with('message', 'Je bod moet hoger zijn dan het oude bod');
 		}
 
-		return redirect('/bedankt')->with('message', $message);
+		return redirect('/bedankt')->with($messageType, $message);
     }
 
 
@@ -90,10 +97,13 @@ class HomeController extends Controller
     // Delete a bid to item
     public function removebid($id)
     {
+        $messageType = 'success';
+		$message = 'Bod verwijderd';
+
         $userBid = Bid::where('user_id', Auth::id())->where('item_id', $id)->orderBy('price', 'DESC')->first();
         $userBid->delete();
 
-		return redirect('/lot-' . $id)->with('message', 'Bod verwijderd');
+		return redirect('/lot-' . $id)->with($messageType, $message);
 		
     }
 
@@ -107,7 +117,6 @@ class HomeController extends Controller
     // Show All Bids for user
     public function showbids()
     {
-		// $bids = Bid::where('user_id', Auth::user()->id)->orderBy('item_id', 'ASC')->get();
 		$bids = Bid::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
 
 		return view('bids', compact('bids'));
