@@ -9,36 +9,22 @@
 
 
 
-        <form id="loginForm" method="POST" action="{{ route('Login') }}" role="form" data-toggle="validator">
-            @csrf
+    <form id="login-form" method="POST" action="{{ route('Login') }}" role="form" data-toggle="validator">
+        @csrf
 
-            
-
-
-
-
-            <div class="form-group">
-                <input type="email" class="form-control-input" id="cemail" name="email" required>
-                <label class="label-control" for="cemail">Email</label>
-                <div class="help-block with-errors"></div>
-            </div>
+        <div class="form-group col-md-5">
+            <label class="label-control" for="cemail">Email</label>
+            <input type="email" class="form-control" id="cemail" name="email" required>
+        </div>
 
 
-            <div class="form-group">
-                <input type="password" class="form-control-input" id="cpassword" name="password" required>
-                <label class="label-control" for="cpassword">Wachtwoord</label>
-                <div class="help-block with-errors"></div>
-            </div>
+        <div class="form-group col-md-5">
+            <label class="label-control" for="cpassword">Wachtwoord</label>
+            <input type="password" class="form-control" id="cpassword" name="password" required>
+        </div>
 
-                    
-
-
-            <div class="form-group">
-                <button type="submit" class="form-control-submit-button">INLOGGEN</button>
-            </div>
-            
-
-        </form>
+        <button type="submit" class="btn btn-primary">Inloggen</button>
+    </form>
 
 
 @stop

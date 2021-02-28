@@ -5,37 +5,29 @@
 
 @section('content')
 
-	<h1>home</h1>
+	<h1>Alle Voorwerpen</h1>
 
 
 	
-	<ul>
+	<ul class="list-group">
 		@foreach ($items as $item)
-	        <li>
-	            
-	            <div class="url">
-	                <h2>
-	                	<a href="{{ '/lot-' . $item->id }}" class="urlTitle">{{ $item->title }}</a>
-	                </h2>
-	            </div> 
+	        <li class="list-group-item">
+	            <a href="{{ '/lot-' . $item->id }}" class="urlTitle">
+	                <h2>Lot {{ $item->id }} - {{ $item->title }}</h2>
 
+	        		<img src="{{ $item->images->first()->path }}" width="200px">
+				</a>
 
-				@foreach ($item->images as $image)
-
-        			<img src="{{ $image->path }}" width="200px">
-
-	    		@endforeach
-
-
-	    		@if (count($item->bids) == 0)
-	    			<p>Nog niets geboden</p>
-	    		@else
-	    			<p>€ {{ $item->bids->max('price') }}</p>
-	    		@endif
+				<h3 class="mt-3 mb-3">Hoogste bod:
+					@if (count($item->bids) == 0)
+						Nog niets geboden
+					@else
+						€ {{ $item->bids->max('price') }}
+					@endif
+				</h3>
 
 	        </li>
 	    @endforeach
 	</ul>
-
 
 @stop

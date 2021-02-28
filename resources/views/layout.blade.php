@@ -14,7 +14,12 @@
 
         <!-- JS -->
         <script src="/js/jquery-3.5.1.min.js"></script>
-        <!-- <script src="{{ asset('js/jquery-ui.min.js')}}"></script> -->
+        <script src="/js/bootstrap.min.js"></script>
+
+<!--
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    -->
 
         <!-- Styles -->
         <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
@@ -31,106 +36,121 @@
 
 
 
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">NVN Veiling</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
 
 
-        
-
-        <nav class="navbar navbar-expand-md navbar-dark navbar-custom fixed-top">
-
-            <a href="/">
-                <h1>LOGO</h1>
-            </a>
-
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav ml-auto">
-
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
 
 
                     @if(Auth::check())
 
                         @if(Auth::user()->role == 'admin')
                             <li class="nav-item">
-                                <a class="nav-link page-scroll" href="{{ route('Admin') }}">Admin Panel</a>
+                                <a class="nav-link" href="{{ route('AdminItems') }}">Bekijk voorwerpen</a>
                             </li>
-                        @endif
 
-
-                        <li class="nav-item">
-                            <h3>{{ Auth::user()->firstname }} |V|</h3>
-                        </li>
-
-
-                        <li class="nav-item">
-                            <a class="nav-link page-scroll" href="{{ route('Bids') }}">Mijn Biedingen</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link page-scroll" href="{{ route('EditPassword') }}">Verander Wachtwoord</a>
-                        </li>
-
-
-                        <li class="nav-item">
-                            <a class="nav-link page-scroll" href="{{ route('Logout') }}">Uitloggen</a>
-                        </li>
-<!--
-                        @if(session()->get('account_type') == 'klant')
                             <li class="nav-item">
-                                <a class="nav-link page-scroll" href="">FAVORIETEN</a>
+                                <a class="nav-link" href="{{ route('AdminAddItem') }}">Voorwerp toevoegen</a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('Bids') }}">Mijn Biedingen</a>
                             </li>
                         @endif
--->
 
-                        <!-- Dropdown Menu -->
-<!--
+
+
+
+
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle page-scroll" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">ACCOUNT</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ Auth::user()->firstname }}
+                            </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href=""><span class="item-text">PROFIEL</span></a>
-                                <div class="dropdown-items-divide-hr"></div>
-                                <a class="dropdown-item" href=""><span class="item-text">UITLOGGEN</span></a>
+
+
+                            <a class="dropdown-item" href="{{ route('EditPassword') }}">Verander Wachtwoord</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('Logout') }}">Uitloggen</a>
+
+
                             </div>
                         </li>
--->
-                        <!-- end of dropdown menu -->
 
                     @else
                         <li class="nav-item">
-                            <a class="nav-link page-scroll" href="{{ route('Login') }}">INLOGGEN</a>
+                            <a class="nav-link" href="{{ route('Login') }}">Inloggen</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link page-scroll" href="{{ route('Register') }}">REGISTREREN</a>
+                            <a class="nav-link" href="{{ route('Register') }}">Registreren</a>
                         </li>
                     @endif
+
+
+
                 </ul>
             </div>
-
-
         </nav>
-    
 
 
       
 
-        <main>
+        <main class="container">
 
-             <div id="fadeout">
-                <div class="messages">
-                    @if(session()->has('message'))
-                        <div class="message"><p>{{ session()->get('message') }}</p></div>
-                    @endif
-                    
-                    @if(session()->has('error'))
-                        <div class="error"><p>{{ session()->get('error') }}</p></div>
-                    @endif
-
-                    @if(count($errors) > 0)
-                        <div class="error"><p>{{ $errors->first() }}</p></div>
-                    @endif
+            <div class="messages">
+                @if ($message = Session::get('success'))
+                <div class="alert alert-success alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button> 
+                        <strong>{{ $message }}</strong>
                 </div>
+                @endif
+
+
+                @if ($message = Session::get('error'))
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button> 
+                        <strong>{{ $message }}</strong>
+                </div>
+                @endif
+
+
+                @if ($message = Session::get('warning'))
+                <div class="alert alert-warning alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button> 
+                    <strong>{{ $message }}</strong>
+                </div>
+                @endif
+
+
+                @if ($message = Session::get('info'))
+                <div class="alert alert-info alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button> 
+                    <strong>{{ $message }}</strong>
+                </div>
+                @endif
+
+
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button> 
+                    {{$errors->first()}}
+                </div>
+                @endif
             </div>
+
+
           
-            <div class="container">
+            <div>
                 @yield('content')
             </div>
 
@@ -142,9 +162,5 @@
 
 
         @yield('script')
-
-        <script>
-        	
-        </script>
     </body>
 </html>

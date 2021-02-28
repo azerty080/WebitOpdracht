@@ -7,37 +7,32 @@
 
 	<h1>Voorwerpen</h1>
 
-
-	<ul>
+	<ul class="list-group">
 		@foreach ($items as $item)
-	        <li>
+	        <li class="list-group-item">
 	            
-	            <div class="url">
-	                <h2>
-	                	<a href="{{ '/admin/item/' . $item->id }}" class="urlTitle">{{ $item->id }} - {{ $item->title }}</a>
+	            <div class="d-flex justify-content-between">
+	                <h2 class="">
+	                	<a href="{{ '/admin/item/' . $item->id }}" class="urlTitle">Lot {{ $item->id }} - {{ $item->title }}</a>
 	                </h2>
-	            </div> 
 
+					<div class="">
+						<a href="{{ route('EditItem', ['id' => $item->id]) }}" class="btn btn-info d-inline-block">Bewerk Voorwerp</a>
 
-				
-				<a href="{{ route('EditItem', ['id' => $item->id]) }}" class="btn btn-info">Bewerk Voorwerp</a>
+						<form id="register-form" class="d-inline-block" method="POST" action="{{ route('RemoveItem', ['id' => $item->id]) }}" role="form" data-toggle="validator">
+					        @csrf
 
+					        <div class="form-group">
+					            <button type="submit" class="btn btn-danger remove-item">Verwijder Voorwerp</button>
+					        </div>
+					    </form>
+				    </div>
 
-
-				<form id="register-form" method="POST" action="{{ route('RemoveItem', ['id' => $item->id]) }}" role="form" data-toggle="validator">
-			        @csrf
-
-			        <div class="form-group">
-			            <button type="submit" class="btn btn-danger remove-item">Verwijder Voorwerp</button>
-			        </div>
-			    </form>
-
+				</div>
 
 	        </li>
 	    @endforeach
 	</ul>
-
-
 
 
 @stop
@@ -48,10 +43,9 @@
 	<script type="text/javascript">
 
 	    $('.remove-item').click(function(e){
-	        e.preventDefault() // Don't post the form, unless confirmed
-	        if (confirm('Are you sure?')) {
-	            // Post the form
-	            $(e.target).closest('form').submit() // Post the surrounding form
+	        e.preventDefault()
+	        if (confirm('Ben je zeker dat je dit voorwerp wil verwijderen?')) {
+	            $(e.target).closest('form').submit()
 	        }
 	    });
 

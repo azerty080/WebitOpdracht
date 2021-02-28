@@ -5,19 +5,14 @@
 
 @section('content')
 
-	<h1>Uw Biedingen</h1>
-
-
+	<h1>Biedingen voor Lot {{ $item->id }} - {{ $item->title }}</h1>
 	
 	<ul class="list-group col-md-6">
 		@foreach ($bids as $bid)
 	        <li class="list-group-item">
-	            <h2>
-	            	<a href="{{ route('ItemDetail', ['id' => $bid->item_id]) }}" class="">{{ $bid->item->title }}: € {{ $bid->price }}</a>
-	            </h2>
+	            {{ $bid->user->firstname }} {{ substr($bid->user->lastname, 0, 1) }}: € {{ $bid->price }}
 	        </li>
 	    @endforeach
 	</ul>
-
 
 @stop

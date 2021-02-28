@@ -8,38 +8,25 @@
 	<h1>Wachtwoord veranderen</h1>
 
 
-	
-
-
-    <form id="register-form" method="POST" action="{{ route('UpdatePassword') }}" role="form" data-toggle="validator">
+    <form id="change-password-form" method="POST" action="{{ route('UpdatePassword') }}" role="form" data-toggle="validator">
         @csrf
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <input type="password" class="form-control-input" id="cold_password" name="old_password" required>
-                <label class="label-control" for="cold_password">Oud Wachtwoord</label>
-                <div class="help-block with-errors"></div>
-            </div>
+        <div class="form-group col-md-4">
+            <label class="label-control" for="cold_password">Oud Wachtwoord</label>
+            <input type="password" class="form-control" id="cold_password" name="old_password" required>
         </div>
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <input type="password" class="form-control-input" id="cpassword" name="password" required>
-                <label class="label-control" for="cpassword">Nieuw Wachtwoord</label>
-                <div class="help-block with-errors"></div>
-            </div>
-            
-            <div class="form-group col-md-6">
-                <input type="password" class="form-control-input" id="cpassword_confirmation" name="password_confirmation" required>
-                <label class="label-control" for="cpassword_confirmation">Bevestig Nieuw Wachtwoord</label>
-                <div class="help-block with-errors"></div>
-            </div>
+        <div class="form-group col-md-4">
+            <label class="label-control" for="cpassword">Nieuw Wachtwoord</label>
+            <input type="password" class="form-control" id="cpassword" name="password" required>
+        </div>
+        
+        <div class="form-group col-md-4">
+            <label class="label-control" for="cpassword_confirmation">Bevestig Nieuw Wachtwoord</label>
+            <input type="password" class="form-control" id="cpassword_confirmation" name="password_confirmation" required>
         </div>
 
-
-        <div class="form-group">
-            <button type="submit" class="form-control-submit-button">Verander Wachtwoord</button>
-        </div>
+		<button type="submit" class="btn btn-primary">Verander Wachtwoord</button>
     </form>
 
 	
