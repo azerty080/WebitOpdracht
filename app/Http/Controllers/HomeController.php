@@ -41,7 +41,7 @@ class HomeController extends Controller
     // Show Single Item
     public function itemdetail($id)
     {
-		$item = Item::where('id', $id)->first();
+		$item = Item::findOrFail($id);
 
 		return view('detail', compact('item'));
     }
@@ -50,7 +50,7 @@ class HomeController extends Controller
     // Show Bids of Item
     public function itembids($id)
     {
-        $item = Item::where('id', $id)->first();
+        $item = Item::findOrFail($id);
         $bids = Bid::where('item_id', $id)->orderBy('price', 'DESC')->get();
 
         return view('itembids', compact('item', 'bids'));
@@ -61,7 +61,7 @@ class HomeController extends Controller
     // Add a bid to item
     public function addbid($id, AddBidRequest $request)
     {
-    	$item = Item::where('id', $id)->first();
+    	$item = Item::findOrFail($id);
     	$user = Auth::user();
 
     	$highestBid = Bid::where('item_id', $id)->max('price');
@@ -78,16 +78,18 @@ class HomeController extends Controller
 	        $bid->user()->associate($user);
 	        $bid->save();
 
-	        $messageType = 'none';
+            $redirectLink = '/bedankt';
+	        $messageType = 'success';
 			$message = 'Je bod is geplaatst';
 
 		} else {
 			
+            $redirectLink = '/lot-' . $id;
 			$messageType = 'error';
 			$message = 'Je bod moet hoger zijn dan het oude bod';
 		}
 
-		return redirect('/bedankt')->with($messageType, $message);
+		return redirect($redirectLink)->with($messageType, $message);
     }
 
 
